@@ -1,4 +1,4 @@
-# fer-demo-spa
+# cookbook
 
 ## Project setup
 ```

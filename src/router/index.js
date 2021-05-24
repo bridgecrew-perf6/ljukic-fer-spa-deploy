@@ -1,20 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import Recipes from "../views/Recipes.vue";
+import Calculator from "../views/Calculator.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Recipes",
+    component: Recipes,
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    path: "/calculator",
+    name: "Calculator",
+    component: Calculator,
   },
 ];
 
@@ -24,3 +21,15 @@ const router = createRouter({
 });
 
 export default router;
+
+
+
+  // {
+  //   path: "/calculator",
+  //   name: "Calculator",
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () =>
+  //     import( /* webpackChunkName: "about" */ "../views/Calculator.vue"),
+  // },
