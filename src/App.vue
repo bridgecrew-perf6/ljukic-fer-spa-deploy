@@ -1,7 +1,12 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Recipes</router-link> |
-    <router-link to="/calculator">Calculator</router-link>
+  <div class="d-flex justify-content-between bg-light border border-bottom border-dark p-3">
+      <h1>My cookbook (Vue ver02)</h1>
+      <h2 class="d-flex">
+          <div class="nav d-flex ml-5">
+              <router-link to="/" class="mr-3">Recipes</router-link>
+              <router-link to="/calculator" class="mr-3">Calculator</router-link>
+          </div>
+      </h2>
   </div>
   <router-view />
 </template>
@@ -14,7 +19,7 @@
   text-align: center;
   color: #2c3e50;
 }
-#nav a.router-link-exact-active {
+div.nav a.router-link-exact-active {
   background-color:gold;
 }
 </style>
