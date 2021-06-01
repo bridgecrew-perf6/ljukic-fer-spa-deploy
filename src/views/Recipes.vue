@@ -1,38 +1,54 @@
 <template>
-  <div v-if="$route.params.id">
-    You are looking for recipe id {{ $route.params.id }} 
-    <br>Try something
-    <router-link :to="'/recipes/' + somethingElse">
-      else e.g. {{ somethingElse }} ...
-    </router-link>
+  <div v-if="selectedRecipe">
+    Recipe #{{ id }}
+    <recipe-card :key="selectedRecipe.id"
+        v-bind="selectedRecipe"
+      ></recipe-card> 
   </div>
   <div v-else>
-    All recipes
+    <h2>All recipes ({{allRecipes.length}})</h2>
+    <hr>
+    <div class="container-fluid p-2 d-flex flex-wrap">
+      <recipe-card v-for="recipe in allRecipes"
+        :key="recipe.id"
+        v-bind="recipe"
+      ></recipe-card>
+    </div>
   </div>
-  <ul>
-    <li v-for="msg in routeChanges" :key="msg">{{ msg }}</li>
-  </ul>
 </template>
 
 <script>
 export default {
+  props: ["id"],
   data() {
     return {
-      routeChanges: [],
-      somethingElse: Math.floor(Math.random() * 1000)
+      allRecipes: [],
+      selectedRecipe: null
     };
   },
   watch: {
     $route(to, from) {
-      this.routeChanges.push(`Route changed: ${from.path} -> ${to.path} `);
-      this.somethingElse = Math.floor(Math.random() * 1000);
+      console.log(`Route changed: ${from.path} -> ${to.path} `);
+      this.selectedRecipe = this.allRecipes.find( x => x.id == this.$route.params.id);
     },
   },
+  methods: {
+    async refreshRecipes() {
+      try {
+            let response = await fetch('http://127.0.0.1:8888/recipes');
+            if (response.ok) {
+                this.allRecipes = await response.json();
+            } else {
+                throw new Error("HTTP-Error: " + response.status);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+  },
+  async mounted() {
+    await this.refreshRecipes();
+    this.selectedRecipe = this.allRecipes.find( x => x.id == this.$route.params.id);
+  }
 };
 </script>
-<style scoped>
-* {
-  font-size: 32px;
-  color: navy;
-}
-</style>

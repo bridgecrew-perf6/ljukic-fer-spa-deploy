@@ -11,6 +11,7 @@ const routes = [
   {
     path: "/recipes/:id?",  // postoji i alias:"/"
     component: Recipes,
+    props: true // sada će router postaviti id u komponenti Recipes
   },
   {
     path: "/calculator",

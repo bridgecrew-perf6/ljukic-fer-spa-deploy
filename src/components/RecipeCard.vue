@@ -1,0 +1,49 @@
+<template>
+  <div class="card mt-2 mr-2" style="width: 230px">
+    <router-link :to="'/recipes/' + id" class="mr-3">
+      <img class="card-img-top" style="width: 190px;" :src="image">
+    </router-link>
+
+    <div class="card-body">
+      <h5 class="card-title">{{ name }}}</h5>
+      <p class="card-text">{{ description }}}</p>
+      <span class="badge badge-primary">
+        Cook/prep time: {{ cookTime }}/{{ prepTime }}
+      </span>
+      <span class="badge badge-secondary">Yield: {{ recipeYield }}</span>
+      <span class="badge badge-success">Pusblished: {{ datePublished }}</span>
+    </div>
+    <div class="card-body">
+      <a :href="url" class="card-link">Source</a>
+    </div>
+    <details v-if="ingredients">
+      <summary><h3>Ingredients</h3></summary>
+      <ul class="list-group list-group-flush">
+        <li v-for="ingredient in ingredients" :key="ingredient" class="list-group-item">{{ ingredient }} </li>
+      </ul>
+    </details>
+  </div>
+</template>
+
+
+<script>
+export default {
+  props: [
+    "id",
+    "image",
+    "name",
+    "description",
+    "cookTime",
+    "prepTime",
+    "recipeYield",
+    "datePublished",
+    "url",
+    "ingredients"
+  ],
+  computed: {
+    idUrl() { 
+      return '/recipes' + this.id;
+    }
+  }
+};
+</script>

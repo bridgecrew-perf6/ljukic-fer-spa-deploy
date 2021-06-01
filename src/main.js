@@ -2,5 +2,9 @@ import { createApp } from "vue";
 import App from "./App.vue";
 // import store from "./store";
 import router from "./router";
+import RecipeCard from './components/RecipeCard.vue';
 
-createApp(App).use(router).mount("#app");
+const app = createApp(App);
+app.use(router);
+app.component('recipe-card', RecipeCard);
+app.mount("#app");
