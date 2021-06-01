@@ -1,5 +1,5 @@
 <template>
-  <div v-if="selectedRecipe">
+  <div v-if="selectedRecipe" class="d-flex justify-content-center">
     Recipe #{{ id }}
     <recipe-card :key="selectedRecipe.id"
         v-bind="selectedRecipe"

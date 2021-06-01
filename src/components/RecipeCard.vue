@@ -5,16 +5,17 @@
     </router-link>
 
     <div class="card-body">
-      <h5 class="card-title">{{ name }}}</h5>
-      <p class="card-text">{{ description }}}</p>
+      <h5 class="card-title">{{ name }}</h5>
+      <p class="card-text">{{ description }}</p>
       <span class="badge badge-primary">
         Cook/prep time: {{ cookTime }}/{{ prepTime }}
       </span>
       <span class="badge badge-secondary">Yield: {{ recipeYield }}</span>
       <span class="badge badge-success">Pusblished: {{ datePublished }}</span>
-    </div>
-    <div class="card-body">
-      <a :href="url" class="card-link">Source</a>
+      <a :href="url" target="_blank" class="card-link">
+        <span class="badge badge-success">{{ url.substring(0, 20) }}...</span>
+      </a>
+      
     </div>
     <details v-if="ingredients">
       <summary><h3>Ingredients</h3></summary>
@@ -47,3 +48,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+div.card-body .badge {
+    white-space: pre-wrap;
+}
+</style>
