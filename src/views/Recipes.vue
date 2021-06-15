@@ -12,7 +12,7 @@
       <recipe-card v-for="recipe in allRecipes"
         :key="recipe.id"
         v-bind="recipe"
-      ></recipe-card>
+      ></recipe-card>      
     </div>
   </div>
 </template>

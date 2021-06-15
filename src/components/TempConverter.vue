@@ -9,7 +9,7 @@
             type="number"
             class="form-control"
             placeholder="C"
-            v-model="tempCelsius"
+            v-model.number="tempCelsius"
             @keyup="c2f"
           />
         </div>
