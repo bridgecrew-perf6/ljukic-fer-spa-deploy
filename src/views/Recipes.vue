@@ -3,8 +3,9 @@
     <h2>Recipe #{{ id }}</h2><br>
     <div class="d-flex justify-content-center">
       <recipe-card :key="selectedRecipe.id"
-          v-bind="selectedRecipe"
+          v-model="allRecipes[selectedRecipeIndex]"
           @delete-recipe="deleteRecipe"
+          can-edit="true"
         ></recipe-card> 
       </div>
   </div>
@@ -12,9 +13,9 @@
     <h2>All recipes ({{allRecipes.length}})</h2>
     <hr>
     <div class="container-fluid p-2 d-flex flex-wrap">
-      <recipe-card v-for="recipe in allRecipes"
+      <recipe-card v-for="(recipe, index)  in allRecipes"
         :key="recipe.id"
-        v-bind="recipe"
+        v-model="allRecipes[index]"
         @delete-recipe="deleteRecipe"
       ></recipe-card>
     </div>
@@ -27,13 +28,15 @@ export default {
   data() {
     return {
       allRecipes: [],
-      selectedRecipe: null
+      selectedRecipe: null,
+      selectedRecipeIndex: -1,
     };
   },
   watch: {
     $route(to, from) {
       console.log(`Route changed: ${from.path} -> ${to.path} `);
       this.selectedRecipe = this.allRecipes.find( x => x.id == this.$route.params.id);
+      this.selectedRecipeIndex = this.allRecipes.findIndex( x => x.id == this.$route.params.id);
     },
   },
   methods: {
@@ -42,6 +45,7 @@ export default {
             let response = await fetch('http://127.0.0.1:8888/recipes');
             if (response.ok) {
                 this.allRecipes = await response.json();
+                this.allRecipes = this.allRecipes.slice(0, 10);
             } else {
                 throw new Error("HTTP-Error: " + response.status);
             }

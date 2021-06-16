@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex justify-content-between bg-light border border-bottom border-dark p-3">
-      <h1>My cookbook (tag 3.0)</h1>
+      <h1>My cookbook (tag 6.0)</h1>
       <h2 class="d-flex">
           <div class="nav d-flex ml-5">
               <router-link to="/" class="mr-3">Recipes</router-link>
