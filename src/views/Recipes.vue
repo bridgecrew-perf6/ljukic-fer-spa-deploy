@@ -1,9 +1,12 @@
 <template>
-  <div v-if="selectedRecipe" class="d-flex justify-content-center">
-    Recipe #{{ id }}
-    <recipe-card :key="selectedRecipe.id"
-        v-bind="selectedRecipe"
-      ></recipe-card> 
+  <div v-if="selectedRecipe">
+    <h2>Recipe #{{ id }}</h2><br>
+    <div class="d-flex justify-content-center">
+      <recipe-card :key="selectedRecipe.id"
+          v-bind="selectedRecipe"
+          @delete-recipe="deleteRecipe"
+        ></recipe-card> 
+      </div>
   </div>
   <div v-else>
     <h2>All recipes ({{allRecipes.length}})</h2>
@@ -12,7 +15,8 @@
       <recipe-card v-for="recipe in allRecipes"
         :key="recipe.id"
         v-bind="recipe"
-      ></recipe-card>      
+        @delete-recipe="deleteRecipe"
+      ></recipe-card>
     </div>
   </div>
 </template>
@@ -44,6 +48,13 @@ export default {
         } catch (error) {
             console.error(error);
         }
+    },
+    deleteRecipe (args) {
+      console.log("deleting recipe", args, this.allRecipes.length);
+      this.allRecipes = this.allRecipes.filter(x => x.id !== args.id);
+      if (this.selectedRecipe && this.selectedRecipe.id === args.id) {
+        this.selectedRecipe = null;
+      }
     }
   },
   async mounted() {

@@ -1,10 +1,10 @@
 <template>
-  <div class="border rounded border-dark">
+  <small-card>
     <h3>Temperature converter</h3>
     <form>
       <div class="form-group row">
         <label for="celsius" class="col-sm-4 col-form-label">Celsius</label>
-        <div class="col-4">
+        <div class="col-8">
           <input
             type="number"
             class="form-control"
@@ -16,7 +16,7 @@
       </div>
       <div class="form-group row">
         <label for="fahrenheit" class="col-4 col-form-label">Fahrenheit</label>
-        <div class="col-4">
+        <div class="col-8">
           <input
             type="number"
             class="form-control"
@@ -27,7 +27,7 @@
         </div>
       </div>
     </form>
-  </div>
+  </small-card>
 </template>
 
 

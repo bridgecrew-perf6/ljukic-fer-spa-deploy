@@ -1,5 +1,5 @@
 <template>
-  <div class="card mt-2 mr-2" style="width: 230px">
+  <small-card>
     <router-link :to="'/recipes/' + id" class="mr-3">
       <img class="card-img-top" style="width: 190px;" :src="image">
     </router-link>
@@ -15,7 +15,6 @@
       <a :href="url" target="_blank" class="card-link">
         <span class="badge badge-success">{{ url.substring(0, 20) }}...</span>
       </a>
-      
     </div>
     <details v-if="ingredients">
       <summary><h3>Ingredients</h3></summary>
@@ -23,12 +22,14 @@
         <li v-for="ingredient in ingredients" :key="ingredient" class="list-group-item">{{ ingredient }} </li>
       </ul>
     </details>
-  </div>
+    <button class="btn btn-danger" @click="deleteRecipe">Delete</button>
+  </small-card>
 </template>
 
 
 <script>
 export default {
+  emits: ["deleteRecipe"], 
   props: [
     "id",
     "image",
@@ -45,8 +46,15 @@ export default {
     idUrl() { 
       return '/recipes' + this.id;
     }
+  },
+  methods: {
+    deleteRecipe() {
+      console.log("emitting delete recipe for ", this.id);
+      this.$emit('deleteRecipe', { id: this.id });
+    }
   }
 };
+
 </script>
 <style scoped>
 div.card-body .badge {
