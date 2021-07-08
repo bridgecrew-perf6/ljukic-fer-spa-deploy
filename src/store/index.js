@@ -48,10 +48,7 @@ export default createStore({
     },
     deleteRecipe(context, {id}) {
       console.log("deleting recipe ", id);
-      context.commit("setRecipes", context.getters.allRecipes.filter((x) => x.id !== id));
-      if (this.selectedRecipe && this.selectedRecipe.id === args.id) {
-        this.selectedRecipe = null;
-      }
+      context.commit("setRecipes", context.getters.allRecipes.filter((x) => x.id !== id));      
     },
     updateRecipe(context, recipe) {
       console.log("updating recipe (actions)", recipe);

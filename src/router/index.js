@@ -1,7 +1,13 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { defineAsyncComponent} from "vue";
+import {
+  createRouter,
+  createWebHistory
+} from "vue-router";
 import Recipes from "../views/Recipes.vue";
 import Calculator from "../views/Calculator.vue";
 import NotFound from "../views/NotFound.vue";
+// import Disco from "../views/Disco.vue";
+const Disco = defineAsyncComponent(() => import('../views/Disco.vue'));
 
 const routes = [
   {
@@ -16,6 +22,10 @@ const routes = [
   {
     path: "/calculator",
     component: Calculator,
+  },
+  {
+    path: "/disco",
+    component: Disco,
   },
   {
     path: "/:catchAll(.*)",

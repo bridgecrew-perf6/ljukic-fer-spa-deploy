@@ -1,11 +1,12 @@
 <template>
   <div v-if="isAuth">
     <div class="d-flex justify-content-between bg-light border border-bottom border-dark p-3">
-        <h1>My cookbook (tag 7.0)</h1>
+        <h1>My cookbook (tag 8.0)</h1>
         <h2 class="d-flex">
             <div class="nav d-flex ml-5">
                 <router-link to="/" class="mr-3">Recipes</router-link>
                 <router-link to="/calculator" class="mr-3">Calculator</router-link>
+                <router-link to="/disco" class="mr-3">Disco!</router-link>
             </div>
             <div class="ml-5">{{ $store.getters.user }}</div>
         </h2>
