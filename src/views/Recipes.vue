@@ -3,20 +3,22 @@
     <h2>Recipe #{{ id }}</h2><br>
     <div class="d-flex justify-content-center">
       <recipe-card :key="selectedRecipe.id"
-          v-model="allRecipes[selectedRecipeIndex]"
-          @delete-recipe="deleteRecipe"
+          v-bind:id="selectedRecipe.id"
+          @recipe-updated="recipeUpdated"
+          @recipe-deleted="recipeDeleted"
           can-edit="true"
         ></recipe-card> 
       </div>
   </div>
   <div v-else>
-    <h2>All recipes ({{allRecipes.length}})</h2>
+    <h2>All recipes ({{$store.getters.allRecipes.length}})</h2>
     <hr>
     <div class="container-fluid p-2 d-flex flex-wrap">
-      <recipe-card v-for="(recipe, index)  in allRecipes"
+      <recipe-card v-for="recipe in allRecipes"
         :key="recipe.id"
-        v-model="allRecipes[index]"
-        @delete-recipe="deleteRecipe"
+        v-bind:id="recipe.id"
+        @recipe-updated="recipeUpdated"
+        @recipe-deleted="recipeDeleted"
       ></recipe-card>
     </div>
   </div>
@@ -27,10 +29,14 @@ export default {
   props: ["id"],
   data() {
     return {
-      allRecipes: [],
       selectedRecipe: null,
       selectedRecipeIndex: -1,
     };
+  },
+  computed: {
+    allRecipes() { 
+      return this.$store.getters.allRecipes;  // ima elegantnije: pogledati mapActions, mapGetters...
+    }
   },
   watch: {
     $route(to, from) {
@@ -40,29 +46,17 @@ export default {
     },
   },
   methods: {
-    async refreshRecipes() {
-      try {
-            let response = await fetch('http://127.0.0.1:8888/recipes');
-            if (response.ok) {
-                this.allRecipes = await response.json();
-                this.allRecipes = this.allRecipes.slice(0, 10);
-            } else {
-                throw new Error("HTTP-Error: " + response.status);
-            }
-        } catch (error) {
-            console.error(error);
-        }
+    recipeUpdated(recipe) {
+      console.log("so now i know recipe is updated...", recipe);
     },
-    deleteRecipe (args) {
-      console.log("deleting recipe", args, this.allRecipes.length);
-      this.allRecipes = this.allRecipes.filter(x => x.id !== args.id);
+    recipeDeleted(args) {
       if (this.selectedRecipe && this.selectedRecipe.id === args.id) {
         this.selectedRecipe = null;
       }
-    }
+    },
   },
   async mounted() {
-    await this.refreshRecipes();
+    await this.$store.dispatch('refreshRecipes');
     this.selectedRecipe = this.allRecipes.find( x => x.id == this.$route.params.id);
   }
 };

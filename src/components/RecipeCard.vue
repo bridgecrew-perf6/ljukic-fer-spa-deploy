@@ -1,26 +1,26 @@
 <template>
 
   <small-card v-if="!editMode">
-    <router-link :to="'/recipes/' + modelValue.id" class="mr-3">
-      <img class="card-img-top" style="width: 190px;" :src="modelValue.image">
+    <router-link :to="'/recipes/' + id" class="mr-3">
+      <img class="card-img-top" style="width: 190px;" :src="recipe.image">
     </router-link>
 
     <div class="card-body">
-      <h5 class="card-title">{{ modelValue.name }}</h5>
-      <p class="card-text">{{ modelValue.description }}</p>
+      <h5 class="card-title">{{ recipe.name }}</h5>
+      <p class="card-text">{{ recipe.description }}</p>
       <span class="badge badge-primary">
-        Cook/prep time: {{ modelValue.cookTime }}/{{ modelValue.prepTime }}
+        Cook/prep time: {{ recipe.cookTime }}/{{ recipe.prepTime }}
       </span>
-      <span class="badge badge-secondary">Yield: {{ modelValue.recipeYield }}</span>
-      <span class="badge badge-success">Pusblished: {{ modelValue.datePublished }}</span>
-      <a :href="modelValue.url" target="_blank" class="card-link">
-        <span class="badge badge-success">{{ modelValue.url.substring(0, 20) }}...</span>
+      <span class="badge badge-secondary">Yield: {{ recipe.recipeYield }}</span>
+      <span class="badge badge-success">Pusblished: {{ recipe.datePublished }}</span>
+      <a :href="recipe.url" target="_blank" class="card-link">
+        <span class="badge badge-success">{{ recipe.url.substring(0, 20) }}...</span>
       </a>
     </div>
-    <details v-if="modelValue.ingredients">
+    <details v-if="recipe.ingredients">
       <summary><h3>Ingredients</h3></summary>
       <ul class="list-group list-group-flush">
-        <li v-for="ingredient in modelValue.ingredients" :key="ingredient" class="list-group-item">{{ ingredient }} </li>
+        <li v-for="ingredient in recipe.ingredients" :key="ingredient" class="list-group-item">{{ ingredient }} </li>
       </ul>
     </details> 
     <button class="btn btn-danger" @click="deleteRecipe">Delete</button>
@@ -30,12 +30,12 @@
     	<form @submit.prevent="submitChanges">
         <div class="form-group">
           <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" placeholder="name"  v-model="name">
+          <input type="text" class="form-control" id="name" placeholder="name"  v-model="recipe.name">
         </div>
         
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea class="form-control" id="description" rows="3" v-model="description"></textarea>
+          <textarea class="form-control" id="description" rows="3" v-model="recipe.description"></textarea>
         </div>
         
         <button class="btn btn-success" type="submit">Save</button>
@@ -48,43 +48,35 @@
 
 <script>
 export default {
-  emits: ["deleteRecipe", "update:modelValue"], 
-  props: ["modelValue", "canEdit"],
+  emits: ["recipeDeleted", "recipeUpdated"], 
+  props: [
+    "id",
+    "canEdit"
+  ],
+
   data() {
     return {
       editMode: false,
-      name: this.modelValue.name,
-      description: this.modelValue.description
+      recipe: {url:""},
     }
-  },
-  computed: {
-    idUrl() { 
-      return '/recipes' + this.id;
-    }
-  },
+  },  
   methods: {
-    deleteRecipe() {
-      this.$emit('deleteRecipe', { id: this.id });
+    async deleteRecipe() {
+      await this.$store.dispatch('deleteRecipe', { id: this.id });
+      this.$emit('recipeDeleted', { id: this.id });
     },
     exitSingleRecipe() {
       this.$router.push({ path: '/recipes' });
     }, 
-    submitChanges() {
+    async submitChanges() {
       console.log("submitting changes");
-      this.$emit('update:modelValue', { 
-        id: this.modelValue.id, 
-        image: this.modelValue.image, 
-        name: this.name, 
-        description: this.description, 
-        cookTime: this.modelValue.cookTime, 
-        prepTime: this.modelValue.prepTime, 
-        recipeYield: this.modelValue.recipeYield, 
-        datePublished: this.modelValue.datePublished, 
-        url: this.modelValue.url, 
-        ingredients: this.modelValue.ingredients
-      });
+      await this.$store.dispatch('updateRecipe', this.recipe);
+      this.$emit('recipeUpdated', this.recipe);
       this.exitSingleRecipe();
     }
+  },
+  async created() {
+    this.recipe = {... await this.$store.getters.getRecipeById(this.id) };    
   }
 };
 

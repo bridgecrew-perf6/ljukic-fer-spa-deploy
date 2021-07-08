@@ -1,15 +1,36 @@
 <template>
-  <div class="d-flex justify-content-between bg-light border border-bottom border-dark p-3">
-      <h1>My cookbook (tag 6.0)</h1>
-      <h2 class="d-flex">
-          <div class="nav d-flex ml-5">
-              <router-link to="/" class="mr-3">Recipes</router-link>
-              <router-link to="/calculator" class="mr-3">Calculator</router-link>
-          </div>
-      </h2>
+  <div v-if="isAuth">
+    <div class="d-flex justify-content-between bg-light border border-bottom border-dark p-3">
+        <h1>My cookbook (tag 7.0)</h1>
+        <h2 class="d-flex">
+            <div class="nav d-flex ml-5">
+                <router-link to="/" class="mr-3">Recipes</router-link>
+                <router-link to="/calculator" class="mr-3">Calculator</router-link>
+            </div>
+            <div class="ml-5">{{ $store.getters.user }}</div>
+        </h2>
+    </div>
+    <router-view />
   </div>
-  <router-view />
+  <div v-else class="d-flex justify-content-center p-5">
+    <user-login class="mt-5"></user-login>
+  </div>
 </template>
+
+<script>
+import UserLogin from './components/UserLogin.vue';
+export default ({
+  components: {
+    UserLogin
+  },
+  computed: {
+    isAuth() {
+      return this.$store.getters.isAuth;
+    }
+  }
+})
+</script>
+
 
 <style>
 #app {
