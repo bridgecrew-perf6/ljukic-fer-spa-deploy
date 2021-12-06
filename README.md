@@ -1,10 +1,5 @@
 # cookbook
 
-Za verziju (tag) 4+ pokrenuti i fer-cookbook-backend koji vraća recepte, dakle:
-
-...\fer-cookbook-backend>node server.js
-...\fer-cookbook>npm run serve
-
 Različite verzije možete dohvaćati tako da:
   * prvo naravno napravite `git clone git@gitlab.com:fer-web2/spa-3.git`
   * `cd spa-3`
@@ -13,6 +8,10 @@ Različite verzije možete dohvaćati tako da:
     *  `git checkout v3.0`
     * ...
 
+Za verziju (tag) 4+ pokrenuti i fer-cookbook-backend koji vraća recepte, dakle:
+
+  * `...\fer-cookbook-backend>node server.js`
+  * `...\fer-cookbook>npm run serve`
 
 ## Project setup
 ```
