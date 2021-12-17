@@ -8,7 +8,7 @@
                 <router-link to="/calculator" class="mr-3">Calculator</router-link>
                 <router-link to="/disco" class="mr-3">Disco!</router-link>
             </div>
-            <div class="ml-5">{{ $store.getters.user }}</div>
+            <div class="ml-5">👥{{ $store.getters.user }}</div>
         </h2>
     </div>
     <router-view />
