@@ -16,7 +16,7 @@ export default createStore({
   },
   getters: {
     user(store) {
-      return `👥 ${store.user}`;
+      return `${store.user}`;
     },
     isAuth(store) {
       return !!store.user;
