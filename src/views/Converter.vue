@@ -1,9 +1,8 @@
 <template>
   <div>
-    <h2>Disco!!!</h2>
+    <h2>Converter</h2>
     <div class="container-fluid p-2 d-flex justify-content-center">
-      <disco-component></disco-component>
+      <eur-hrk></eur-hrk>
     </div>
   </div>
 </template>
-

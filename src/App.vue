@@ -1,14 +1,15 @@
 <template>
   <div v-if="isAuth">
-    <div class="d-flex justify-content-between bg-light border border-bottom border-dark p-3">
-        <h1>My cookbook (tag 8.0)</h1>
+    <div class="d-flex justify-content-between bg-dark border border-bottom border-light p-3">
+        <h1>MegaApp</h1>
         <h2 class="d-flex">
             <div class="nav d-flex ml-5">
-                <router-link to="/" class="mr-3">Recipes</router-link>
-                <router-link to="/calculator" class="mr-3">Calculator</router-link>
-                <router-link to="/disco" class="mr-3">Disco!</router-link>
+                <router-link to="/" class="mr-3">Home</router-link>
+                <router-link to="/personaldata" class="mr-3">Personal data</router-link>
+                <router-link to="/coding" class="mr-3">Coding</router-link>
+                <router-link to="/converter" class="mr-3">Converter</router-link>
             </div>
-            <div class="ml-5">👥{{ $store.getters.user }}</div>
+            <div class="ml-5">Hello, {{ $store.getters.user }}!</div>
         </h2>
     </div>
     <router-view />
@@ -35,13 +36,14 @@ export default ({
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #ece2e2;
+  background-color: rgb(51, 78, 51);
 }
 div.nav a.router-link-exact-active {
-  background-color:gold;
+  background-color:rgb(235, 174, 224);
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
   <div>
-    <img src="../assets/disco.gif"/>
+    <img src="../assets/coding.gif"/>
   </div>
 </template>
